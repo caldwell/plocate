@@ -61,9 +61,6 @@ any later version.
 using namespace std;
 using namespace std::chrono;
 
-/* Next conf_prunepaths entry */
-static size_t conf_prunepaths_index; /* = 0; */
-
 void usage()
 {
 	printf(
@@ -664,6 +661,10 @@ int scan(const string &path, int fd, dev_t parent_dev, dir_time modified, dir_ti
 	// of a given directory before recursing, without buffering even more information. Hopefully,
 	// we won't go out of file descriptors here (it could happen if someone has tens of thousands
 	// of subdirectories in a single directory); if so, the admin will need to raise the limit.
+
+        /* Next conf_prunepaths entry */
+        size_t conf_prunepaths_index = 0;
+
 	for (entry &e : entries) {
 		if (!e.is_directory) {
 			e.dt = not_a_dir;
